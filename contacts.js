@@ -19,7 +19,9 @@ const getContactById = async (id) => {
   try {
     const data = await fs.readFile(contactsPath);
     const contacts = JSON.parse(data);
-    const userMatch = contacts.find((contact) => contact.id === id);
+    const userMatch = contacts.find(
+      (contact) => contact.id.toString() === id.toString()
+    );
     console.log(userMatch);
     if (!userMatch) {
       throw new Error(`Contact with id:${id} not found`);
@@ -33,11 +35,15 @@ const removeContact = async (id) => {
   try {
     const data = await fs.readFile(contactsPath);
     const contacts = JSON.parse(data);
-    const contactIdx = contacts.findIndex((contact) => contact.id === id);
+    const contactIdx = contacts.findIndex(
+      (contact) => contact.id.toString() === id.toString()
+    );
     if (contactIdx === -1) {
       throw new Error(`Contact with id:${id} not found`);
     }
-    const filteredContacts = contacts.filter((contact) => contact.id !== id);
+    const filteredContacts = contacts.filter(
+      (contact) => contact.id.toString() !== id.toString()
+    );
     console.log(filteredContacts);
   } catch (error) {
     console.error(error.message);
